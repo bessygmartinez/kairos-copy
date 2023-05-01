@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const db = require("../models");
 
 // Defining methods for the usersController
@@ -11,8 +12,10 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
+    const userID = mongoose.Types.ObjectId(req.params.id);
+
     db.User
-      .findById(req.params.id)
+      .findById(userID)
       .populate('workday')
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
